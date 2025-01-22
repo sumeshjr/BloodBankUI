@@ -1,0 +1,33 @@
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h1 {
+  font-weight: bold;
+  color: #b71c1c; /* Blood-red color */
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #555;
+}
+/* Set a consistent height for carousel images */
+.custom-carousel-image {
+  height: 400px; /* Set your desired height */
+  object-fit: cover; /* Ensures the image scales properly without distortion */
+}
+
+/* Additional styling for captions */
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.custom-carousel {
+  max-width: 900px; /* Optional: Constrain carousel width */
+  margin: 0 auto; /* Center align the carousel */
+}
