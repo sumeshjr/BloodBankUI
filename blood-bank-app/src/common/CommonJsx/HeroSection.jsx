@@ -2,7 +2,6 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/style.css"; // Ensure the CSS file path is correct
 import "../css/responsive.css";
-import logo from "../images/logo.png";
 import sliderImg from "../images/slider-img.png";
 
 const storedUserRole = localStorage.getItem("role");
