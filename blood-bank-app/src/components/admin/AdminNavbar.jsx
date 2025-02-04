@@ -1,14 +1,15 @@
 import React from "react";
-import { Container, Nav, Navbar, Dropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, Dropdown, Image } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa"; // Import a user icon
+import logo from "../../common/coverimages/logo.png";
 
 const AdminNavbar = () => {
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="/admin">Blood Bank</Navbar.Brand>
+          <Navbar.Brand href="/admin">Vital Drops</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">

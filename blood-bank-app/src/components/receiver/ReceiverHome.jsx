@@ -2,6 +2,7 @@ import React from "react";
 import ReceiverNav from "./ReceiverNav";
 import Slider from "../../common/CommonJsx/Slider";
 import { toast, ToastContainer } from "react-toastify";
+import HeroSection from "../../common/CommonJsx/HeroSection";
 
 const ReceiverHome = () => {
   React.useEffect(() => {
@@ -11,7 +12,7 @@ const ReceiverHome = () => {
     <div>
       <ToastContainer />
       <ReceiverNav />
-      <Slider />
+      <HeroSection />
     </div>
   );
 };

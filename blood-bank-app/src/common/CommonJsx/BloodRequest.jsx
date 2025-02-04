@@ -73,7 +73,7 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
         // Using the BloodRequestService to create a blood request
         const response = await bloodRequestService.createBloodRequest({
           userId: userId, // Pass userId in the API request
-          quantity: quantity ? quantity : undefined,
+          quantity: quantity ? quantity : 1,
           urgency:
             userRole === "HOSPITAL_STAFF" || userRole === "RECEIVER"
               ? urgency

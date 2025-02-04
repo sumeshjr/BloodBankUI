@@ -3,6 +3,7 @@ import DonorNav from "./DonorNav";
 import Slider from "../../common/CommonJsx/Slider";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import HeroSection from "../../common/CommonJsx/HeroSection";
 
 const DonorHome = () => {
   React.useEffect(() => {
@@ -14,7 +15,7 @@ const DonorHome = () => {
     <div>
       <ToastContainer />
       <DonorNav />
-      <Slider />
+      <HeroSection />
     </div>
   );
 };

@@ -9,12 +9,6 @@ const Slider = () => {
   return (
     <div>
       <Container className="py-5">
-        <h1 className="text-center mb-4">Welcome to the Blood Bank</h1>
-        <p className="text-center">
-          Join us in saving lives! Every drop of blood counts, and your donation
-          can make a world of difference.
-        </p>
-
         {/* Bootstrap Carousel */}
         <Carousel className="mt-5">
           {/* Slide 1 */}
@@ -71,11 +65,6 @@ const Slider = () => {
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>
-
-        <p className="text-center mt-5">
-          <strong>Did you know?</strong> Just one pint of blood can save up to
-          three lives. Join our mission today and become a lifesaver!
-        </p>
       </Container>
     </div>
   );

@@ -12,9 +12,14 @@ const Home = () => {
     navigate("/register");
   };
 
+  const API_URL = import.meta.env.VITE_BLOOD_BANK_URL;
+  console.log(API_URL);
+
   return (
     <div>
       <CustomNavbar />
+      <br />
+      <br />
       {/* Slider Section */}
       <Slider />
       {/* Hero Section */}

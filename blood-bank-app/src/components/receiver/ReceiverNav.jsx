@@ -1,13 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Navbar, Nav, Container, Dropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, Dropdown, Image } from "react-bootstrap";
 import { FaUserCircle } from "react-icons/fa";
+import logo from "../../common/coverimages/logo.png";
+
 const ReceiverNav = () => {
   return (
     <div>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="/receiver">Blood Bank</Navbar.Brand>
+          <Navbar.Brand href="/receiver">Vital Drops</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
