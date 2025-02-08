@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form ,Container, Row, Col, Card } from "react-bootstrap";
 import DataTable from "react-data-table-component";
 import bloodRequestService from "../../services/bloodRequest.service";
 import AdminNavbar from "./AdminNavbar";
-
+import Swal from "sweetalert2"; // Import SweetAlert
 const BloodInfo = () => {
   const [bloodInfo, setBloodInfo] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -25,19 +25,30 @@ const BloodInfo = () => {
   };
 
   // Update blood info by ID with quantity
+
   const handleUpdateBloodInfo = async (id, quantity) => {
     try {
       const updatedData = await bloodRequestService.updateBloodInfo(
         id,
         quantity
       );
-      alert("Blood info updated successfully!");
+
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Blood info updated successfully!",
+      });
+
       getBloodInfo(); // Refresh the blood info after update
       setShowModal(false); // Close the modal
     } catch (error) {
-      alert(
-        "Failed to update blood info: " + (error.response?.data?.message || "")
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Failed to update blood info: ${
+          error.response?.data?.message || ""
+        }`,
+      });
     }
   };
 
@@ -99,19 +110,34 @@ const BloodInfo = () => {
   return (
     <div>
       <AdminNavbar />
-      <h1>Blood Information</h1>
 
-      {error && <div className="alert alert-danger">{error}</div>}
+      <Container fluid className="py-5">
+        <Row className="justify-content-center">
+          <Col md={8}>
+            <Card className="shadow-sm p-3 mb-5 bg-white rounded">
+              <Card.Body>
+                <Card.Title className="text-center">
+                  <h1>Blood Information</h1>
+                </Card.Title>
 
-      {/* DataTable */}
-      <DataTable
-        title="Blood Info Table"
-        columns={columns}
-        data={bloodInfo}
-        responsive
-        striped
-        highlightOnHover
-      />
+                {error && <div className="alert alert-danger">{error}</div>}
+
+                <div style={{ overflowX: "auto", minWidth: "100%" }}>
+                  {/* DataTable */}
+                  <DataTable
+                    title="Blood Info Table"
+                    columns={columns}
+                    data={bloodInfo}
+                    responsive
+                    striped
+                    highlightOnHover
+                  />
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
 
       {/* Modal for Updating Blood Info */}
       {currentBloodInfo && (
