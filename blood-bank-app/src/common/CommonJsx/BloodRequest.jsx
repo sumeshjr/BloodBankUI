@@ -22,6 +22,23 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userRole, setUserRole] = useState(""); // For storing the user role
 
+
+  // Additional fields for donors
+  const [weight, setWeight] = useState("");
+  const [healthChecked, setHealthChecked] = useState(false);
+
+  // form valid or not
+  const isFormValid = () => {
+    if (!userId) return false;
+    if (quantity && (isNaN(quantity) || quantity <= 0)) return false;
+    if (userRole === "HOSPITAL_STAFF" && !bloodGroup) return false;
+    if (userRole === "DONOR") {
+      if (!weight || weight < 50) return false;
+      if (!healthChecked) return false;
+    }
+    return true;
+  };
+
   // Fetch the username and role from localStorage or any other source
   useEffect(() => {
     const storedUserName = localStorage.getItem("userName");
@@ -36,23 +53,12 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validation
-    if (!userId) {
-      setErrorMessage("User ID is required.");
+    
+    //validation
+    if (!isFormValid()) {
+      setErrorMessage("Please fill in all required fields correctly.");
       return;
     }
-
-    if (quantity && (isNaN(quantity) || quantity <= 0)) {
-      setErrorMessage("If provided, quantity must be a positive number.");
-      return;
-    }
-
-    if (userRole === "HOSPITAL_STAFF" && !bloodGroup) {
-      setErrorMessage("Blood Group is required for hospital staff.");
-      return;
-    }
-
     setErrorMessage("");
 
     // Show confirmation dialog before submitting
@@ -77,7 +83,7 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
           urgency:
             userRole === "HOSPITAL_STAFF" || userRole === "RECEIVER"
               ? urgency
-              : undefined, // Only include urgency if user is HOSPITAL_STAFF
+              : undefined, 
           bloodGroup: userRole === "HOSPITAL_STAFF" ? bloodGroup : undefined, // Only include bloodGroup if user is HOSPITAL_STAFF
         });
 
@@ -85,7 +91,10 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Blood request submitted successfully!",
+          text: userRole === "RECEIVER" || userRole === "DONOR" ? "Blood request submitted successfully! Once your request is approved, please contact the administrator to obtain the hospital staff details. " : 
+          "Blood request submitted successfully!",
+        }).then(() => {
+          window.location.reload(); // Refreshes the page after closing the alert
         });
 
         // Handle success
@@ -128,18 +137,20 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
                   />
                 </Form.Group>
 
-                <Form.Group controlId="quantity">
-                  <Form.Label>Quantity (Optional)</Form.Label>
+              {userRole != "DONOR" && (<Form.Group controlId="quantity">
+                  <Form.Label>Quantity</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="Enter Quantity"
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                   />
-                </Form.Group>
+                </Form.Group>)}
+                
 
-                {userRole === "HOSPITAL_STAFF" && (
+                {userRole === "HOSPITAL_STAFF" || userRole === "RECEIVER"  && (
                   <>
+                  
                     <Form.Group controlId="urgency">
                       <Form.Label>Urgency</Form.Label>
                       <Form.Control
@@ -152,8 +163,12 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
                         <option value="HIGH">High</option>
                       </Form.Control>
                     </Form.Group>
-
-                    <Form.Group controlId="bloodGroup">
+                    </>
+                   
+                )}
+{userRole === "HOSPITAL_STAFF" && (
+  <>
+<Form.Group controlId="bloodGroup">
                       <Form.Label>Blood Group</Form.Label>
                       <Form.Control
                         as="select"
@@ -170,18 +185,55 @@ const BloodRequest = ({ userId: userIdProp, quantity: quantityProp }) => {
                         <option value="O_POSITIVE">O+</option>
                         <option value="O_NEGATIVE">O-</option>
                       </Form.Control>
+                    </Form.Group></>
+)}
+
+{userRole === "DONOR" && (
+                  <>
+                    <Form.Group controlId="weight">
+                      <Form.Label>Weight (kg)</Form.Label>
+                      <Form.Control
+                        type="number"
+                        placeholder="Enter your weight"
+                        value={weight}
+                        onChange={(e) => setWeight(e.target.value)}
+                      />
+                      {weight && weight < 50 && <Form.Text className="text-danger">Weight must be at least 50 kg.</Form.Text>}
                     </Form.Group>
+
+                    <Form.Label className="mt-3">Health Status</Form.Label>
+                    <div className="border p-3 rounded">
+                      <p>Confirm that none of the following apply to you:</p>
+                      <ul>
+                        <li>Cold or fever in the past week.</li>
+                        <li>Currently taking antibiotics or other medications.</li>
+                        <li>History of heart problems, hypertension, epilepsy, diabetes (insulin), cancer, kidney/liver disease, etc.</li>
+                        <li>Major surgery in the past 6 months.</li>
+                        <li>Vaccination in the past 24 hours.</li>
+                        <li>Recent miscarriage or pregnancy/lactation in the past year.</li>
+                        <li>Heavy menstrual flow or recent menstruation within the last 10 days.</li>
+                        <li>Fainting during last donation.</li>
+                        <li>Shared needles or history of drug addiction.</li>
+                        <li>High-risk sexual behavior or positive HIV test.</li>
+                      </ul>
+                      <Form.Check
+                        type="checkbox"
+                        label="I confirm that I meet the above health criteria."
+                        checked={healthChecked}
+                        onChange={() => setHealthChecked(!healthChecked)}
+                      />
+                    </div>
                   </>
                 )}
 
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="w-100"
-                  disabled={isLoading}
-                >
-                  {isLoading ? "Submitting..." : "Submit Request"}
-                </Button>
+  <Button
+  variant="primary"
+  type="submit"
+  className="w-100 mt-3"
+  disabled={isLoading}
+>
+  {isLoading ? "Submitting..." : "Submit Request"}
+</Button>
               </Form>
             </Card.Body>
           </Card>
