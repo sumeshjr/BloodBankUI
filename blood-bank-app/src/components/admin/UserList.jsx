@@ -155,11 +155,21 @@ const UserList = () => {
       width: "200px",
     },
   ];
-
+  // Conditional row styling
+  const conditionalRowStyles = [
+    {
+      when: () => true, // Applies to all rows
+      style: {
+        backgroundColor: "#f3e5f5", // Light gray background
+        color: "#212529", // Dark text color
+      },
+    },
+  ];
+  
   return (
     <>
       <AdminNavbar />
-      <Container className="py-5">
+      <Container fluid className="py-5">
         <Row className="justify-content-center">
           <Col md={10}>
             <Card className="shadow-sm p-3 mb-5 bg-white rounded">
