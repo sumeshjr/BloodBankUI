@@ -145,24 +145,21 @@ const RegisterStaff = () => {
                   </Form.Group>
 
                   <Form.Group controlId="bloodGroup" className="mb-3">
-  <Form.Label>Blood Group</Form.Label>
-  <Form.Select
-    name="bloodGroup"
-    value={formData.bloodGroup}
-    onChange={handleChange}
-    required
-  >
-    <option value="">Select Blood Group</option>
-    {Object.entries(bloodGroupOptions).map(([key, label]) => (
-      <option key={key} value={key}>
-        {label}
-      </option>
-    ))}
-  </Form.Select>
-</Form.Group>
-
-
-                        
+                    <Form.Label>Blood Group</Form.Label>
+                    <Form.Select
+                      name="bloodGroup"
+                      value={formData.bloodGroup}
+                      onChange={handleChange}
+                      required
+                    >
+                      <option value="">Select Blood Group</option>
+                      {Object.entries(bloodGroupOptions).map(([key, label]) => (
+                        <option key={key} value={key}>
+                          {label}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
 
                   <Form.Group controlId="role" className="mb-3">
                     <Form.Label>Role</Form.Label>
