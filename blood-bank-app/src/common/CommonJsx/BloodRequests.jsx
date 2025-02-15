@@ -121,27 +121,14 @@ const BloodRequests = () => {
   // Conditional row styling
   const conditionalRowStyles = [
     {
-      when: (row) => row.urgency === "HIGH",
+      when: () => true, // Applies to all rows
       style: {
-        backgroundColor: "#f8d7da",
-        color: "#721c24",
-      },
-    },
-    {
-      when: (row) => row.urgency === "MEDIUM",
-      style: {
-        backgroundColor: "#fff3cd",
-        color: "#856404",
-      },
-    },
-    {
-      when: (row) => row.urgency === "LOW",
-      style: {
-        backgroundColor: "#d4edda",
-        color: "#155724",
+        backgroundColor: "#e3f2fd", // Light gray background
+        color: "#212529", // Dark text color
       },
     },
   ];
+  
 
   // Columns with badges for status
   const columns = [
@@ -192,31 +179,7 @@ const BloodRequests = () => {
           ? new Date(row.transactionCompletedTime).toLocaleDateString()
           : "N/A",
       sortable: true,
-    },
-    {
-      name: "Action",
-      cell: (row) => (
-        <div>
-          {userRole === "HOSPITAL_STAFF" && row.status === "APPROVED" && (
-            <Button
-              variant="success"
-              onClick={() => handleStatusChangeStaff(row.id)}
-            >
-              Mark as Transaction Completed
-            </Button>
-          )}
-          {userRole === "ADMIN" && row.status === "PENDING" && (
-            <Button
-              variant="primary"
-              onClick={() => handleStatusChangeAdmin(row.id)}
-            >
-              Approve Request
-            </Button>
-          )}
-        </div>
-      ),
-      width: "250px",
-    },
+    }
   ];
 
   const CustomPagination = () => (
@@ -242,9 +205,9 @@ const BloodRequests = () => {
   );
 
   return (
-    <Container className="py-5">
+    <Container fluid className="py-5">
       <Row className="justify-content-center">
-        <Col md={8}>
+        <Col md={12}>
           <Card className="shadow-sm p-3 mb-5 bg-white rounded">
             <Card.Body>
               <Card.Title className="text-center">
@@ -255,7 +218,7 @@ const BloodRequests = () => {
 
               {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
 
-              <div style={{ maxWidth: "100%", overflowX: "auto" }}>
+              <div style={{ overflowX: "auto", minWidth: "100%" }}>
                 <DataTable
                   columns={columns}
                   data={bloodRequests}

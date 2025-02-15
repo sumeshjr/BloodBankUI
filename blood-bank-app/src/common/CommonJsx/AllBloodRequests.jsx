@@ -96,6 +96,10 @@ const AllBloodRequests = () => {
       name: "User Name",
       selector: (row) => row.userName,
       sortable: true,
+    },  {
+      name: "User Role",
+      selector: (row) => row.userRole,
+      sortable: true,
     },
     {
       name: "Blood Group",
@@ -139,6 +143,7 @@ const AllBloodRequests = () => {
       },
       sortable: true,
     },
+    
 
     {
       name: "Requested Time",
@@ -171,6 +176,20 @@ const AllBloodRequests = () => {
       width: "250px", // Fixed width for action column
     },
   ];
+  const filteredColumns = columns.filter(
+    (col) => userRole === "ADMIN" || userRole === "HOSPITAL_STAFF" || col.name !== "Action"
+  );
+   // Conditional row styling
+   const conditionalRowStyles = [
+    {
+      when: () => true, // Applies to all rows
+      style: {
+        backgroundColor: "#e3f2fd", // Light gray background
+        color: "#212529", // Dark text color
+      },
+    },
+  ];
+  
 
   // Custom pagination component for DataTable
   const CustomPagination = () => (
@@ -196,35 +215,39 @@ const AllBloodRequests = () => {
   );
 
   return (
-    <Container className="py-5">
+    <Container fluid className="py-5"> {/* Use 'fluid' for full width */}
       <Row className="justify-content-center">
-        <Col md={8}>
+        <Col md={12}> 
           <Card className="shadow-sm p-3 mb-5 bg-white rounded">
             <Card.Body>
               <Card.Title className="text-center">Blood Requests</Card.Title>
-
+  
               {loading && <Spinner animation="border" variant="primary" />}
-
               {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+  
+              <div style={{ overflowX: "auto", minWidth: "100%" }}> {/* Ensures table expands */}
+                <DataTable
+                  columns={filteredColumns}
+                  data={bloodRequests}
+                  progressPending={loading}
+                  pagination
+                  paginationComponent={CustomPagination}
+                  highlightOnHover
+                  striped
+                  responsive
+                  defaultSortFieldId={0}
+                  defaultSortAsc={true}
+                  conditionalRowStyles={conditionalRowStyles}
 
-              <DataTable
-                columns={columns}
-                data={bloodRequests}
-                progressPending={loading}
-                pagination
-                paginationComponent={CustomPagination}
-                highlightOnHover
-                striped
-                responsive
-                defaultSortFieldId={0}
-                defaultSortAsc={true}
-              />
+                />
+              </div>
             </Card.Body>
           </Card>
         </Col>
       </Row>
     </Container>
   );
+  
 };
 
 export default AllBloodRequests;

@@ -2,7 +2,6 @@ import React from "react";
 import StaffNavbar from "./StaffNavbar";
 import Slider from "../../common/CommonJsx/Slider";
 import { toast, ToastContainer } from "react-toastify";
-import StaffCom from "../../common/CommonJsx/StaffCom";
 
 const StaffHome = () => {
   React.useEffect(() => {
@@ -12,7 +11,7 @@ const StaffHome = () => {
     <div>
       <ToastContainer />
       <StaffNavbar />
-      <StaffCom />
+      <Slider />
     </div>
   );
 };
