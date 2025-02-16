@@ -14,6 +14,9 @@ const StaffNavbar = () => {
               <Nav.Link as={NavLink} to="/requestStaff" end>
                 Create Blood Request
               </Nav.Link>
+              <Nav.Link as={NavLink} to="/bloodInfo" end>
+                              View Blood Info
+                            </Nav.Link>
               <Nav.Link as={NavLink} to="/viewMyRequestStaff" end>
                 View My Requests
               </Nav.Link>

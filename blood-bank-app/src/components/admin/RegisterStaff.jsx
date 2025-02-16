@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
+import { bloodGroupOptions } from "../../common/constants/bloodGroups";
 
 import AdminNavbar from "./AdminNavbar";
 import loginService from "../../services/login.service";
@@ -145,14 +146,19 @@ const RegisterStaff = () => {
 
                   <Form.Group controlId="bloodGroup" className="mb-3">
                     <Form.Label>Blood Group</Form.Label>
-                    <Form.Control
-                      type="text"
+                    <Form.Select
                       name="bloodGroup"
-                      placeholder="Enter staff blood group"
                       value={formData.bloodGroup}
                       onChange={handleChange}
                       required
-                    />
+                    >
+                      <option value="">Select Blood Group</option>
+                      {Object.entries(bloodGroupOptions).map(([key, label]) => (
+                        <option key={key} value={key}>
+                          {label}
+                        </option>
+                      ))}
+                    </Form.Select>
                   </Form.Group>
 
                   <Form.Group controlId="role" className="mb-3">

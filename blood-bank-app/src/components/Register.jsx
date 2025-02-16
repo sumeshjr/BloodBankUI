@@ -27,7 +27,9 @@ const validationSchema = Yup.object({
     .required("Password is required"),
   age: Yup.number()
     .positive("Age must be a positive number")
-    .required("Age is required"),
+    .required("Age is required")
+    .min(18, "Age must be at least 18")
+    .max(65, "Age must be at most 65"),
   contactNum: Yup.string()
     .matches(/^[0-9]{10}$/, "Contact number must be 10 digits")
     .required("Contact number is required"),
